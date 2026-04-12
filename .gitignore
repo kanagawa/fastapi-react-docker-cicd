@@ -1,0 +1,45 @@
+# --- OS generated files ---
+.DS_Store
+Thumbs.db
+
+# --- Python / FastAPI ---
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/.venv/
+backend/venv/
+backend/env/
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
+backend/.mypy_cache/
+
+# --- Node / React ---
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.eslintcache
+frontend/npm-debug.log*
+frontend/yarn-error.log*
+frontend/.vitest_cache/
+
+# --- Docker ---
+# 基本的には含めますが、特定の環境用データなどは除外
+.docker/
+
+# --- Environment Variables (CRITICAL) ---
+# 秘密情報が含まれるため、絶対にコミットしない
+.env
+.env.local
+.env.*.local
+*.env
+
+# --- IDE / Editor ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- GitHub Actions / CI ---
+# ログファイルなどがあれば除外
+*.log
