@@ -1,0 +1,16 @@
+services:
+  frontend:
+    build:
+      # 重要：docker/ から見て package.json がある場所を指定
+      context: ../
+      dockerfile: docker/Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      # ソースコードの変更を即時反映（ホットリロード）させる
+      - ../:/app
+      # コンテナ内の node_modules がローカルで上書きされないように保護
+      - /app/node_modules
+    environment:
+      # Windows/WSL2環境でホットリロードが効かない場合の対策
+      - CHOKIDAR_USEPOLLING=true
