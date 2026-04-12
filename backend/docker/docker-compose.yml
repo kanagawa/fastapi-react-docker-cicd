@@ -1,0 +1,13 @@
+services:
+  backend:
+    build:
+      # 重要：Dockerfileから見て、プロジェクトのルート(pyproject.tomlがある場所)を指定
+      context: ../
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      # ローカルのソースコードを同期させる設定
+      - ../:/app
+    environment:
+      - PYTHONPATH=/app/src
