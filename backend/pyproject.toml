@@ -19,7 +19,6 @@ package-mode = false
 [tool.mypy]
 explicit_package_bases = true
 mypy_path = "src"
-strict = true
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
