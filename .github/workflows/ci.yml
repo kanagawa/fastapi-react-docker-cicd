@@ -59,7 +59,7 @@ jobs:
         run: poetry run ruff check . --output-format=github
 
       - name: Run Mypy (Type check)
-        run: cd backend && poetry run mypy src
+        run: poetry run mypy src
 
       - name: Run Pytest
-        run: cd backend && PYTHONPATH=src poetry run pytest
+        run: PYTHONPATH=src poetry run pytest
