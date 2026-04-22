@@ -1,37 +1,65 @@
 name: Fullstack CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
 
 jobs:
-  backend-ci:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install poetry
-        run: pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-          cache: "poetry"
-          cache-dependency-path: backend/poetry.lock
-      - name: Install dependencies
-        run: cd backend && poetry install
-      - name: Run Test
-        # PYTHONPATHを通すことでsrc配下のbackendパッケージを認識させる
-        run: cd backend && PYTHONPATH=src poetry run pytest
-
+  # --- Frontend Job: ESLint & Vitest ---
   frontend-ci:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: "24"
           cache: "npm"
           cache-dependency-path: frontend/package-lock.json
+
       - name: Install dependencies
-        run: cd frontend && npm install
-      - name: Run Test
-        run: cd frontend && npm test
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run Vitest
+        run: npm run test
+
+  # --- Backend Job: Ruff, Mypy & Pytest ---
+  backend-ci:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install poetry
+        run: pipx install poetry
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "poetry"
+          cache-dependency-path: backend/poetry.lock
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run Ruff (Lint & Format check)
+        # --output-format=github をつけると、PR上の該当箇所にエラーが表示されます
+        run: poetry run ruff check . --output-format=github
+
+      - name: Run Mypy (Type check)
+        run: poetry run mypy .
+
+      - name: Run Pytest
+        run: PYTHONPATH=src poetry run pytest
