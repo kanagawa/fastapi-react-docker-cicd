@@ -1,9 +1,12 @@
+name: backend
 services:
   backend:
     build:
       # 重要：Dockerfileから見て、プロジェクトのルート(pyproject.tomlがある場所)を指定
       context: ../
       dockerfile: docker/Dockerfile
+    image: cicd-backend
+    container_name: cicd-backend
     ports:
       - "8000:8000"
     volumes:

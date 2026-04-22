@@ -40,4 +40,4 @@ ENV PYTHONPATH=/app/src
 
 # 9. アプリケーションの起動
 # src/backend/main.py 内の app インスタンスを起動します
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

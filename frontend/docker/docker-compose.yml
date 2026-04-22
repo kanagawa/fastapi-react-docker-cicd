@@ -1,9 +1,12 @@
+name: frontend
 services:
   frontend:
     build:
       # 重要：docker/ から見て package.json がある場所を指定
       context: ../
       dockerfile: docker/Dockerfile
+    image: cicd-frontend
+    container_name: cicd-frontend
     ports:
       - "5173:5173"
     volumes:
