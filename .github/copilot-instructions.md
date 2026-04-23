@@ -6,7 +6,6 @@
   - Source: `./backend/src`
   - Note: `package-mode = false` 運用。実行時は `PYTHONPATH=src` を前提とする。
 - **Frontend:** `./frontend` (React, Vite, TypeScript)
-- **Tooling:** Trunk による統合管理（Ruff, Mypy, ESLint）
 
 ## 2. Communication Protocol
 - **Language:** 回答、コード解説、コメントはすべて **日本語** で行ってください。
