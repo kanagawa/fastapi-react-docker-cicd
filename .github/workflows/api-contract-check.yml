@@ -1,0 +1,47 @@
+name: API Contract Check (Orval)
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+
+jobs:
+  contract-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 1. バックエンドから最新スキーマを抽出
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Backend Deps
+        run: |
+          pipx install poetry
+          cd backend && poetry install
+      - name: Extract OpenAPI Schema
+        run: |
+          cd backend && PYTHONPATH=src poetry run python -c "
+          import json
+          from main import app
+          print(json.dumps(app.openapi()))
+          " > ../openapi_new.json
+
+      # 2. Orval でフロントエンドコードを再生成
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Install Frontend Deps
+        run: cd frontend && npm install
+
+      - name: Run Orval
+        run: cd frontend && npx orval
+
+      # 3. 型チェック（不整合があればここでエラーになる）
+      - name: TypeScript Type Check
+        run: cd frontend && npx tsc --noEmit
