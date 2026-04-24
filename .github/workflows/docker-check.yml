@@ -25,7 +25,7 @@ jobs:
 
       # --- Frontend Docker Check ---
       - name: Build Frontend Image
-        run: docker build -t frontend-test -f ./frontend/frontend/Dockerfile ./frontend
+        run: docker build -t frontend-test -f ./frontend/docker/Dockerfile ./frontend
 
       - name: Test Frontend Container Startup
         run: |
