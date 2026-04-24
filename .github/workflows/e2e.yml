@@ -1,0 +1,61 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+      - '.github/workflows/e2e.yml'
+
+jobs:
+  e2e-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # --- 1. Backend Setup ---
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Backend Deps
+        run: |
+          pipx install poetry
+          cd backend && poetry install
+      - name: Start Backend
+        run: |
+          cd backend && PYTHONPATH=src poetry run uvicorn main:app --port 8000 &
+          # 起動を待機 (wait-onを後で使用)
+
+      # --- 2. Frontend Setup ---
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Install Frontend Deps
+        run: cd frontend && npm install
+      - name: Install Playwright Browsers
+        run: cd frontend && npx playwright install --with-deps chromium
+
+      # --- 3. Start & Wait ---
+      - name: Wait for Services
+        run: |
+          npx wait-on http://localhost:8000/docs
+          cd frontend && npm run dev -- --port 3000 &
+          npx wait-on http://localhost:3000
+
+      # --- 4. Run E2E Tests ---
+      - name: Run Playwright tests
+        run: cd frontend && npx playwright test
+        env:
+          VITE_API_BASE_URL: http://localhost:8000
+
+      # --- 5. Artifacts (失敗時の動画やスクショを保存) ---
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: frontend/playwright-report/
+          retention-days: 30
