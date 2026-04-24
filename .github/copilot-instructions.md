@@ -11,7 +11,6 @@
 - **Language:** 回答、コード解説、コメントはすべて **日本語** で行ってください。
 - **Variables/Names:** 変数名、関数名、クラス名等の識別子は **英語** で命名してください。
 - **Context Awareness:** 修正を提案する際は、常にプロジェクトのディレクトリ構造とインポートルール（`src` 起点）を考慮してください。
-- **Issue Reference:** 実装時は対応するIssueの「完了条件」を読み取り、不足しているタスクがないか確認してください。
 
 ## 3. Commit Message Standards (Conventional Commits)
 コミットメッセージの提案には、以下の形式を厳守してください。
@@ -33,7 +32,9 @@
 - **Testing:** `vitest` を使用。`jest` は使用しないでください。
 - **Type Safety:** `any` の使用を禁止し、厳格な型定義を行ってください。
 
-## 5. Development Workflow
+## 5. Issue and Development Workflow
+- **Issue Creation:** 新機能やバグの修正を提案する際は、.github/ISSUE_TEMPLATE/内から適切なテンプレートを選択し、そのフォーマットに従ってIssueを作成してください。
+- **Issue Reference:** 実装時は対応するIssueの「完了条件」を読み取り、不足しているタスクがないか確認してください。
 - **PR Creation:** プルリクエスト作成時は、`.github/pull_request_template.md` の形式（概要、変更点、チェックリスト）に従って説明文を生成してください。タイトルと説明は日本語で記述してください。
 - **CI/CD:** GitHub Actions での Lint/Test パスを前提としたコード品質を維持してください。
 
