@@ -6,7 +6,6 @@
   - Source: `./backend/src`
   - Note: `package-mode = false` 運用。実行時は `PYTHONPATH=src` を前提とする。
 - **Frontend:** `./frontend` (React, Vite, TypeScript)
-- **Tooling:** Trunk による統合管理（Ruff, Mypy, ESLint）
 
 ## 2. Communication Protocol
 - **Language:** 回答、コード解説、コメントはすべて **日本語** で行ってください。
@@ -36,3 +35,18 @@
 ## 5. Development Workflow
 - **PR Creation:** プルリクエスト作成時は、`.github/pull_request_template.md` の形式（概要、変更点、チェックリスト）に従って説明文を生成してください。
 - **CI/CD:** GitHub Actions での Lint/Test パスを前提としたコード品質を維持してください。
+
+## 6. Branch Naming Conventions
+新しいブランチを作成する際、またはブランチ名を提案する際は、以下の形式を厳守してください。
+- **Format:** `<type>/<issue-number>-<short-description>`
+- **Types:** (Conventional CommitsのTypeと同期)
+  - `feature/`: 新機能の開発
+  - `fix/`: バグ修正
+  - `docs/`: ドキュメント整備
+  - `refactor/`: リファクタリング
+  - `test/`: テスト追加
+  - `chore/`: ツールや設定の更新
+- **Description:** 小文字の英数字とハイフン (`-`) のみを使用してください。
+- **Example:** - `feat/123-add-login-api`
+  - `fix/456-resolve-mypy-errors`
+  - `chore/ci-setup` (Issue番号がない場合)
