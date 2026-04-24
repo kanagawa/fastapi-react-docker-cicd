@@ -33,7 +33,7 @@
 - **Type Safety:** `any` の使用を禁止し、厳格な型定義を行ってください。
 
 ## 5. Development Workflow
-- **PR Creation:** プルリクエスト作成時は、`.github/pull_request_template.md` の形式（概要、変更点、チェックリスト）に従って説明文を生成してください。
+- **PR Creation:** プルリクエスト作成時は、`.github/pull_request_template.md` の形式（概要、変更点、チェックリスト）に従って説明文を生成してください。タイトルと説明は日本語で記述してください。
 - **CI/CD:** GitHub Actions での Lint/Test パスを前提としたコード品質を維持してください。
 
 ## 6. Branch Naming Conventions
