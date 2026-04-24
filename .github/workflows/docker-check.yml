@@ -29,9 +29,9 @@ jobs:
 
       - name: Test Frontend Container Startup
         run: |
-          docker run -d --name frontend-container -p 3000:3000 frontend-test
+          docker run -d --name frontend-container -p 5173:5173 frontend-test
           # 起動確認
-          timeout 30s bash -c 'until curl -s localhost:3000 > /dev/null; do sleep 2; done'
+          timeout 30s bash -c 'until curl -s localhost:5173 > /dev/null; do sleep 2; done'
           docker ps | grep frontend-container
 
       # --- Cleanup ---
