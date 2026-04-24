@@ -14,7 +14,7 @@ jobs:
 
       # --- Backend Docker Check ---
       - name: Build Backend Image
-        run: docker build -t backend-test ./backend
+        run: docker build -t backend-test ./backend/docker
 
       - name: Test Backend Container Startup
         run: |
