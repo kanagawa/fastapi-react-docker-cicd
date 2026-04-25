@@ -8,7 +8,7 @@ on:
     paths: ['backend/**', 'openapi.json']
 
 jobs:
-backend-ci:
+  backend-ci:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -39,4 +39,4 @@ backend-ci:
 
       - name: Run Pytest
         run: |
-          PTHONPATH=src poetry run pytest --cov=src --cov-report=xml
+          PYTHONPATH=src poetry run pytest --cov=src --cov-report=xml
