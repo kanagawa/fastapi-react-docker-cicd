@@ -2,7 +2,7 @@ name: API Contract Check (Orval)
 
 on:
   push:
-    branches: ["**"]
+    branches: ["main"]
     paths: ['backend/**', 'frontend/**','**.github/workflows/api-contract-check.yml']
   pull_request:
     branches: ["main"]

@@ -1,7 +1,7 @@
 name: Frontend Docker Check
 on:
   push:
-    branches: ["**"]
+    branches: ["main"]
     paths: ['frontend/**', 'openapi.json','**.github/workflows/frontend-docker-check.yml']
   pull_request:
     branches: ["main"]

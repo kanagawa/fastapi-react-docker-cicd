@@ -1,7 +1,7 @@
 name: Backend Docker Check
 on:
   push:
-    branches: ["**"]
+    branches: ["main"]
     paths: ['backend/**', 'openapi.json','**.github/workflows/backend-docker-check.yml']
   pull_request:
     branches: ["main"]
