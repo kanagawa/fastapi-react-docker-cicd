@@ -2,7 +2,7 @@ name: Backend CI
 on:
   push:
     branches: ["**"]
-    paths: ['backend/**', 'openapi.json']
+    paths: ['backend/**', 'openapi.json','**.github/workflows/backend-ci.yml']
   pull_request:
     branches: ["**"]
     paths: ['backend/**', 'openapi.json']
