@@ -1,27 +1,17 @@
-name: Docker Build Check
-
+name: Frontend Docker Check
 on:
   push:
-    branches: [main]
+    branches: ["**"]
+    paths: ['frontend/**', 'openapi.json','**.github/workflows/frontend-docker-check.yml']
   pull_request:
-    branches: [main]
+    branches: ["main"]
+    paths: ['frontend/**', 'openapi.json']
 
 jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      # --- Backend Docker Check ---
-      - name: Build Backend Image
-        run: docker build -t backend-test -f ./backend/docker/Dockerfile ./backend
-
-      - name: Test Backend Container Startup
-        run: |
-          docker run -d --name backend-container -p 8000:8000 backend-test
-          # サーバーが起動するまで待機 (最大30秒)
-          timeout 30s bash -c 'until curl -s localhost:8000/docs > /dev/null; do sleep 2; done'
-          docker ps | grep backend-container
 
       # --- Frontend Docker Check ---
       - name: Build Frontend Image
@@ -37,4 +27,4 @@ jobs:
       # --- Cleanup ---
       - name: Stop Containers
         if: always()
-        run: docker rm -f backend-container frontend-container || true
+        run: docker rm -f frontend-container || true
