@@ -2,7 +2,7 @@ name: Frontend CI
 on:
   push:
     branches: ["**"]
-    paths: ['frontend/**', 'openapi.json']
+    paths: ['frontend/**', 'openapi.json','**.github/workflows/frontend-ci.yml']
   pull_request:
     branches: ["**"]
     paths: ['frontend/**', 'openapi.json']
@@ -30,7 +30,7 @@ jobs:
         run: npm run lint
 
       - name: Run Vitest
-        run: npm run test:run
+        run: npx vitest run
 
       - name: Build check
         run: npm run build
