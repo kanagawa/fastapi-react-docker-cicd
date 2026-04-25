@@ -1,0 +1,25 @@
+name: Backend Docker Check
+on:
+  push:
+    branches: ["**"]
+    paths: ['backend/**', 'openapi.json','**.github/workflows/backend-ci.yml']
+  pull_request:
+    branches: ["main"]
+    paths: ['backend/**', 'openapi.json']
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # --- Backend Docker Check ---
+      - name: Build Backend Image
+        run: docker build -t backend-test -f ./backend/docker/Dockerfile ./backend
+
+      - name: Test Backend Container Startup
+        run: |
+          docker run -d --name backend-container -p 8000:8000 backend-test
+          # サーバーが起動するまで待機 (最大30秒)
+          timeout 30s bash -c 'until curl -s localhost:8000/docs > /dev/null; do sleep 2; done'
+          docker ps | grep backend-container
