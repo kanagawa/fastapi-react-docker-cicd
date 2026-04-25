@@ -1,0 +1,30 @@
+name: Frontend Docker Check
+on:
+  push:
+    branches: ["**"]
+    paths: ['frontend/**', 'openapi.json','**.github/workflows/frontend-docker-check.yml']
+  pull_request:
+    branches: ["main"]
+    paths: ['frontend/**', 'openapi.json']
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # --- Frontend Docker Check ---
+      - name: Build Frontend Image
+        run: docker build -t frontend-test -f ./frontend/docker/Dockerfile ./frontend
+
+      - name: Test Frontend Container Startup
+        run: |
+          docker run -d --name frontend-container -p 5173:5173 frontend-test
+          # 起動確認
+          timeout 30s bash -c 'until curl -s localhost:5173 > /dev/null; do sleep 2; done'
+          docker ps | grep frontend-container
+
+      # --- Cleanup ---
+      - name: Stop Containers
+        if: always()
+        run: docker rm -f frontend-container || true
