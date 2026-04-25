@@ -23,3 +23,8 @@ jobs:
           # サーバーが起動するまで待機 (最大30秒)
           timeout 30s bash -c 'until curl -s localhost:8000/docs > /dev/null; do sleep 2; done'
           docker ps | grep backend-container
+      
+      # --- Cleanup ---
+      - name: Stop Containers
+        if: always()
+        run: docker rm -f backend-container || true
